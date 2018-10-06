@@ -41,7 +41,7 @@ public class Game {
 			this.currentPlayer = CheckerTeam.BOTTEM;
 			this.gui.controls.currentPlayer.setText("Turn: Player 2 (Orange)");
 		}
-		
+
 	}
 
 	private void reset() {
@@ -82,15 +82,15 @@ public class Game {
 
 	public void draw(Graphics g, int width, int height) {
 		int size;
-		int widthStart=0;
-		int heightStart=0;
-		
+		int widthStart = 0;
+		int heightStart = 0;
+
 		if (width < height) {
 			size = width;
-			heightStart=(height/2)-(size/2);
+			heightStart = (height / 2) - (size / 2);
 		} else {
 			size = height;
-			widthStart=(width/2)-(size/2);
+			widthStart = (width / 2) - (size / 2);
 		}
 		int tileSize = (size / 8);
 		int ovalSize = tileSize - (tileSize / 6);
@@ -102,17 +102,19 @@ public class Game {
 				// draw tiles
 
 				g.setColor(index % 2 == 0 ? Color.DARK_GRAY : Color.LIGHT_GRAY);
-				g.fillRect(((size / 8) * i)+widthStart, ((size / 8) * j)+heightStart, size / 8, size / 8);
+				g.fillRect(((size / 8) * i) + widthStart, ((size / 8) * j) + heightStart, size / 8, size / 8);
 				g.setColor(Color.BLACK);
-				g.drawRect(((size / 8) * i)+widthStart, ((size / 8) * j)+heightStart, size / 8, size / 8);
+				g.drawRect(((size / 8) * i) + widthStart, ((size / 8) * j) + heightStart, size / 8, size / 8);
 
 				// draw checkers
 				if (checkers[i][j] != null) {
 
 					g.setColor(this.checkers[i][j].getColor());
-					g.fillOval((tileSize * i) + shiftSize + widthStart, (tileSize * j) + shiftSize + heightStart, ovalSize, ovalSize);
+					g.fillOval((tileSize * i) + shiftSize + widthStart, (tileSize * j) + shiftSize + heightStart,
+							ovalSize, ovalSize);
 					g.setColor(Color.BLACK);
-					g.drawOval((tileSize * i) + shiftSize + widthStart, (tileSize * j) + shiftSize + heightStart, ovalSize, ovalSize);
+					g.drawOval((tileSize * i) + shiftSize + widthStart, (tileSize * j) + shiftSize + heightStart,
+							ovalSize, ovalSize);
 
 				}
 				index++;
@@ -129,7 +131,7 @@ public class Game {
 		int i = mouseWidth / widthTileSize;
 		int j = mouseHeight / heightTileSize;
 
-		if (checkers[i][j] != null && checkers[i][j].getTeam()!=this.currentPlayer) {
+		if (checkers[i][j] != null && checkers[i][j].getTeam() != this.currentPlayer) {
 			this.selectedChecker = this.checkers[i][j];
 			this.selectedCheckerI = i;
 			this.selectedCheckerJ = j;
@@ -182,10 +184,16 @@ public class Game {
 						}
 					}
 				}
-
+				if (!canJumpAgain()) {
+					nextPlayer();
+				}
 			}
 			this.gui.display.redraw();
 		}
+	}
+
+	private boolean canJumpAgain() {
+		return false;
 	}
 
 	public boolean canMove(int sourceI, int sourceJ, int destI, int destJ) {
